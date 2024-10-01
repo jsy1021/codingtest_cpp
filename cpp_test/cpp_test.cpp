@@ -917,3 +917,326 @@
 //	print(solution({ "classic", "pop", "classic", "classic", "pop" }, { 500, 600, 150, 800, 2500 })); //출력값 :  1 0 0 1
 //	return 0;
 //}
+
+//#include<iostream>
+//#include<iterator>
+//#include<vector>
+//#include<string>
+//
+//using namespace std;
+////전위순회
+//string preorder(vector<int> nodes, int idx) {
+//	if (idx < nodes.size()) {
+//		string ret = to_string(nodes[idx]) + " ";
+//		ret+=preorder(nodes, idx * 2 + 1);
+//		ret += preorder(nodes, idx * 2 + 2);
+//		return ret;
+//	}
+//	return "";
+//}
+////중위순회
+//string inorder(vector<int> nodes, int idx) {
+//	if (idx < nodes.size()) {
+//		string ret = inorder(nodes, idx * 2 + 1);
+//		ret += to_string(nodes[idx]) + " ";
+//		ret += inorder(nodes, idx * 2 + 2);
+//		return ret;
+//	}
+//	return "";
+//}
+////후위순회
+//string postorder(vector<int> nodes, int idx) {
+//	if (idx < nodes.size()) {
+//		string ret = postorder(nodes, idx * 2 + 1);
+//		ret += preorder(nodes, idx * 2 + 2);
+//		ret += to_string(nodes[idx]) + " ";
+//		return ret;
+//	}
+//	return "";
+//}
+//
+//
+//vector<string> solution(vector<int> nodes) {
+//	vector<string> result;
+//
+//	string pre = preorder(nodes, 0);
+//	string in = inorder(nodes, 0);
+//	string post = postorder(nodes, 0);
+//
+//	pre.pop_back();
+//	in.pop_back();
+//	post.pop_back();
+//
+//	result.push_back(pre);
+//	result.push_back(in);
+//	result.push_back(post);
+//
+//	return result;
+//}
+//void printVector(const vector<string> vec) {
+//	copy(vec.begin(), vec.end(), ostream_iterator<string>(cout, " "));
+//	cout << endl;
+//}
+//int main() {
+//	vector<int> node = { 1,2,3,4,5,6,7 };
+//	printVector(solution(node));
+//	
+//}
+
+//#include<iostream>
+//#include<iterator>
+//#include<vector>
+//
+//using namespace std;
+//
+//class Node {
+//public:
+//	int val;
+//	Node* left, * right;
+//
+//	Node(int key) : val(key), left(nullptr), right(nullptr) {}
+//};
+//class BST {
+//private:
+//	Node* root;
+//	Node* insertNode(Node* node, int key) {
+//		if (!node) {
+//			return new Node(key);
+//		}
+//		if (key < node->val) {
+//			node->left = insertNode(node->left, key);
+//		}
+//		else {
+//			node->right = insertNode(node->right, key);
+//		}
+//		return node;
+//	}
+//	bool searchNode(Node* node, int key) {
+//		if (!node)
+//		{
+//			return false;
+//		}
+//		if (key == node->val) {
+//			return true;
+//		}
+//		return key < node->val ?
+//			searchNode(node->left, key) :
+//			searchNode(node->right, key);
+//	}
+//public:
+//	BST() : root(nullptr) {}
+//
+//	void insert(int key) {
+//		root = insertNode(root, key);
+//	}
+//	bool search(int key) {
+//		return searchNode(root, key);
+//	}
+//};
+//vector<bool>solution(vector<int> lst, vector<int>search_lst) {
+//	BST bst;
+//	for (int key : lst) {
+//		bst.insert(key);
+//	}
+//	vector<bool> result;
+//	for (int search_val : search_lst) {
+//		result.push_back(bst.search(search_val));
+//	}
+//	return result;
+//}
+//void print(vector<bool> vec) {
+//	copy(vec.begin(), vec.end(), ostream_iterator<bool>(cout, " "));
+//	cout << endl;
+//}
+//int main() {
+//	print(solution({ 5, 3, 8, 4, 2, 1, 7, 10 }, { 1, 2, 5, 6 })); //출력값 : 1 1 1 0
+//	print(solution({ 1, 3, 5, 7, 9 }, { 2, 4, 6, 8, 10 })); //출력값 : 0 0 0 0 0  
+//	return 0;
+//}
+
+////375p. 문제30 예상 대진표
+//#include<iostream>
+//
+//using namespace std;
+//
+//int solution(int n, int a, int b) {
+//	int ans = 0;
+//
+//	while (a != b) {
+//		a = (a + 1) / 2;
+//		b = (b + 1) / 2;
+//		++ans;
+//	}
+//	return ans;
+//}
+//int main() {
+//	int n, a, b;
+//	cin >> n >> a >> b;
+//	cout<<(solution(n, a, b));
+//	return 0;
+//}
+
+//#include<iostream>
+//#include<string>
+//#include<vector>
+//#include<unordered_map>
+//#include <iterator>
+//using namespace std;
+//
+//vector<int> solution(vector<string> enroll, vector<string> referral, vector<string> seller, vector<int> amount) {
+//    unordered_map<string, string> parent;
+//
+//
+//    for (size_t i = 0; i < enroll.size(); ++i) {
+//        parent[enroll[i]] = referral[i];
+//    }
+//
+//    unordered_map<string, int> total;
+//
+//    for (const auto& name : enroll) {
+//        total[name] = 0;
+//    }
+//
+//    for (size_t i = 0; i < seller.size(); ++i) {
+//
+//        int money = amount[i] * 100;
+//        string cur_name = seller[i];
+//
+//        while (money > 0 && cur_name != "-") {
+//            
+//            int to_distribute = money / 10;
+//            total[cur_name] += money - to_distribute;
+//            
+//            if (parent.find(cur_name) != parent.end()) {
+//                cur_name = parent[cur_name];
+//            }
+//            else {
+//                break;
+//            }
+//           
+//            money = to_distribute;
+//        }
+//    }
+//
+// 
+//    vector<int> result;
+//    result.reserve(enroll.size());
+//    for (const auto& name : enroll) {
+//        result.push_back(total[name]);
+//    }
+//
+//    return result;
+//}
+//
+//void print(vector<int> vec)
+//{
+//    copy(vec.begin(), vec.end(), std::ostream_iterator<int>(cout, " "));
+//    cout << endl;
+//}
+//int main() {
+//    print(solution({ "john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young" },
+//        { "-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward" },
+//        { "young", "john", "tod", "emily", "mary" },
+//        { 12, 4, 2, 5, 10 }
+//    )); //출력값 : 360 958 108 0 450 18 180 1080
+//
+//    print(solution({ "john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young" },
+//        { "-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward" },
+//        { "sam", "emily", "jaimie", "edward" },
+//        { 2, 3, 5, 4 }
+//    )); //출력값 : 0 110 378 180 270 450 0 0 
+//}
+// 
+// 
+// 387p. 문제32 길 찾기 게임
+//#include<iostream>
+//#include<iterator>
+//#include<vector>
+//#include<algorithm>
+//
+//using namespace std;
+//
+//struct Node {
+//	int id, x, y;
+//	Node* left = nullptr;
+//	Node* right = nullptr;
+//	Node(int id, int x, int y) :id(id), x(x), y(y) {}
+//};
+//class BinaryTree {
+//private:
+//	Node* root = nullptr;
+//	static bool compareNodes(Node* a, Node* b) {//y좌표는 내림차순, y좌표가 같다면 x좌표 오름차순으로 정렬
+//		if (a->y != b->y)
+//			return a->y > b->y;
+//		
+//		return a->x < b->x;
+//	}
+//	Node* addNode(Node* current, Node* newNode) {
+//		if (current == nullptr) {
+//			return newNode;
+//		}
+//		if (newNode->x < current->x) {
+//			current->left = addNode(current->left, newNode);
+//		}
+//		else
+//			current->right = addNode(current->right, newNode);
+//
+//		return current;
+//	}
+//	void preOrder(Node* node, vector<int>& traversal) {
+//		if (node == nullptr) {
+//			return;
+//		}
+//		traversal.push_back(node->id);
+//		preOrder(node->left, traversal);
+//		preOrder(node->right, traversal);
+//	}
+//	void postOrder(Node* node, vector<int>& traversal) {
+//		if (node == nullptr)
+//			return;
+//		postOrder(node->left, traversal);
+//		postOrder(node->right, traversal);
+//		traversal.push_back(node->id);
+//	}
+//public:
+//	BinaryTree() : root(nullptr) {}
+//	void buildTree(const vector<vector<int>>& nodeInfo) {
+//		vector<Node*>nodes;
+//		for (int i = 0; i < nodeInfo.size(); i++) {
+//			nodes.push_back(new Node(i + 1, nodeInfo[i][0], nodeInfo[i][1]));
+//		}
+//		sort(nodes.begin(), nodes.end(), compareNodes);
+//		for (Node* node : nodes) {
+//			root = addNode(root, node);
+//		}
+//	}
+//	vector<int> getPreOrderTraversal() {
+//		vector<int>traversal;
+//		preOrder(root, traversal);
+//		return traversal;
+//	}
+//	vector<int>getPostOrderTraversal() {
+//		vector<int>traversal;
+//		postOrder(root, traversal);
+//		return traversal;
+//	}
+//};
+//vector<vector<int>> solution(vector<vector<int>>nodeinfo) {
+//	BinaryTree tree;
+//	tree.buildTree(nodeinfo);
+//	vector<int>preOrder = tree.getPreOrderTraversal();
+//	vector<int>postOrder = tree.getPostOrderTraversal();
+//
+//	return{ preOrder,postOrder };
+//}
+//void print(vector<vector<int>> vec) {
+//	for (auto& vec_element : vec) {
+//		copy(vec_element.begin(), vec_element.end(), ostream_iterator<int>(cout, " "));
+//		cout << endl;
+//	}
+//}
+//int main() {
+//	print(solution({ {5, 3}, {11, 5}, {13, 3}, {3, 5}, {6, 1}, {1, 3}, {8, 6}, {7, 2}, {2, 2} }));
+//
+//	return 0;
+//}
