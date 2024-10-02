@@ -1240,3 +1240,153 @@
 //
 //	return 0;
 //}
+
+////411p. 문제33 간단한 유니온-파인드 알고리즘 구현하기
+//#include<iostream>
+//#include<iterator>
+//#include<vector>
+//
+//using namespace std;
+//
+//vector<int>parents;
+//vector<int>rankData;
+//int charToInt(char c) {
+//	return c - '0';
+//}
+//
+//int find(int x) {//x는 인덱스 값을 의미
+//	if (parents[x] == x) {
+//		return x;
+//	}
+//	parents[x] = find(parents[x]);
+//	
+//	return parents[x];
+//}
+//void unionSet(int x, int y) {
+//	int root1 = find(x);
+//	int root2 = find(y);
+//	
+//	if (root1 != root2) {
+//		//루트 노드가 다른 경우만 체크, 같은 경우는 합치기 연산이 필요없음
+//		if (rankData[root1] < rankData[root2])
+//			parents[root1] = root2;
+//		else if (rankData[root1] > rankData[root2])
+//			parents[root2] = root1;
+//		else {
+//			parents[root2] = root1;
+//			rankData[root1]++;
+//		}
+//	}
+//}
+//
+//vector<bool>solution(int k, vector<vector<char>>operations) {
+//	parents.resize(k);
+//	rankData.resize(k, 0);
+//	
+//	for (int i = 0; i < k; i++) {
+//		parents[i] = i;
+//	}
+//	vector<bool>results;
+//	for (const auto& op : operations) {
+//		if (op[0] == 'u') {
+//			int x = charToInt(op[1]);
+//			int y = charToInt(op[2]);
+//			unionSet(x, y);
+//		}
+//		else if (op[0] == 'f') {
+//			int x = charToInt(op[1]);
+//			int y = charToInt(op[2]);
+//			results.push_back(find(x) == find(y));
+//		}
+//	}
+//	return results;
+//}
+//void print(vector<bool>vec) {
+//	copy(vec.begin(), vec.end(), ostream_iterator<bool>(cout, " "));
+//	cout << endl;
+//}
+//int main() {
+//	print(solution(3, { {'u', '0', '1'}, {'u', '1', '2'}, {'f', '0', '2'} })); // 결과값 : 1
+//	return 0;
+//}
+
+//#include<iostream>
+//#include<vector>
+//#include<unordered_set>
+//
+//using namespace std;
+//
+//int solution(vector<int> nums) {
+//	unordered_set<int>s (nums.begin(), nums.end());
+//	return min(nums.size() / 2, s.size());
+//}
+//int main() {
+//	cout << solution({ 3, 1, 2 ,3 }) << endl; //출력값 : 2
+//	cout << solution({ 3, 3, 3, 2, 2, 4 }) << endl; //출력값 : 3
+//	cout << solution({ 3, 3, 3, 2, 2, 2 }) << endl; //출력값 : 2
+//	return 0;
+//}
+
+////420p. 문제35 섬 연결하기
+//#include<iostream>
+//#include<algorithm>
+//#include<vector>
+//
+//using namespace std;
+//
+//class DisjointSet {
+//private:
+//	vector<int> parent, rank;
+//	
+//public:
+//	DisjointSet(int size): parent(size, -1), rank(size,0){}
+//	
+//	int find(int node) {
+//		if (parent[node] == -1)
+//			return node;
+//		return parent[node] = find(parent[node]);
+//	}
+//	
+//	void merge(int node1, int node2) {
+//		int root1 = find(node1);
+//		int root2 = find(node2);
+//
+//		if (root1 != root2) {
+//			if (rank[root1] > rank[root2]) {
+//				parent[root2] = root1;
+//			}
+//			else if (rank[root1] < rank[root1]) {
+//				parent[root1] = root2;
+//			}
+//			else {
+//				parent[root2] = root1;
+//				rank[root1]++;
+//			}
+//		}
+//	}
+//	bool isCycle(int node1, int node2) {
+//		return find(node1) == find(node2);
+//	}
+//};
+//int solution(int n, vector<vector<int>>costs) {
+//	sort(costs.begin(), costs.end(),
+//		[](const vector<int>& a, const vector<int>& b) {return a[2] < b[2]; });//간선의 가중치를 기준으로 오름차순 정렬
+//	DisjointSet disjointSet(n);
+//	int totalCost = 0;
+//	
+//	for (const auto& edge : costs) {
+//		int cost = edge[2];
+//		int node1 = edge[0];
+//		int node2 = edge[1];
+//		
+//		if (!disjointSet.isCycle(node1,node2)) {
+//			disjointSet.merge(node1, node2);
+//			totalCost += cost;
+//		}
+//	}
+//	return totalCost;
+//}
+//int main() {
+//	cout << solution(4, { {0, 1, 1}, {0, 2, 2}, {1, 2, 5}, {1, 3, 1}, {2, 3, 8} }) << endl; //출력값 : 4
+//	return 0;
+//}
