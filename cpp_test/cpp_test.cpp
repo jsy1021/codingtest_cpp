@@ -1390,3 +1390,289 @@
 //	cout << solution(4, { {0, 1, 1}, {0, 2, 2}, {1, 2, 5}, {1, 3, 1}, {2, 3, 8} }) << endl; //출력값 : 4
 //	return 0;
 //}
+//#include<iostream>
+//#include<vector>
+//
+//using namespace std;
+//
+//struct nodeInfo {
+//	int V;
+//	int W;
+//};
+//vector<vector<nodeInfo>>adjList; //인접리스트
+//void addEdge(int u, int v, int w) {
+//	adjList[u].push_back({ v, w });
+//}
+//
+//void printAdjList() {
+//	for (int i = 1; i < adjList.size(); i++) {
+//		cout << "Node" << i << ":";
+//		for (const auto& node : adjList[i]) {
+//			cout << "-> (v: " << node.V << ", W: " << node.W << ")";
+//		}
+//		cout << endl;
+//	}
+//}
+//int main() {
+//	int N = 5;
+//	adjList.resize(N);
+//	addEdge(1, 2, 3);
+//	addEdge(2, 1, 6);
+//	addEdge(2, 3, 5);
+//	addEdge(3, 2, 1);
+//	addEdge(3, 4, 13);
+//	addEdge(4, 4, 9);
+//	addEdge(4, 1, 42);
+//
+//	printAdjList();
+//	
+//	return 0;
+//}
+
+////467p. 문제36 깊이 우선 탐색 순회
+//#include<iostream>
+//#include<iterator>
+//#include<vector>
+//#include<unordered_map>
+//#include<unordered_set>
+//
+//using namespace std;
+//
+//unordered_map<char, vector<char>>adjList;
+//vector<char>result;
+//unordered_set<char>visited;
+//
+//void dfs(char node) {
+//	visited.insert(node);
+//	result.push_back(node);
+//
+//	for (char neighbor : adjList[node]) {
+//		if (visited.find(neighbor) == visited.end()) {
+//			dfs(neighbor);
+//		}
+//	}
+//}
+//
+//vector<char>solution(vector<pair<char, char>>graph, char start) {
+//	for (auto& edge : graph) {
+//		char u = edge.first;
+//		char v = edge.second;
+//		adjList[u].push_back(v);
+//	}
+//	dfs(start);
+//	return result;
+//}
+//void print(vector<char> vec) {
+//	copy(vec.begin(), vec.end(), ostream_iterator<char>(cout, " "));
+//}
+//int main() {
+//	print(solution({ {'A', 'B'}, {'B', 'C'}, {'C', 'D'}, {'D', 'E'} }, 'A')); //출력값 : A B C D E
+//	return 0;
+//}
+
+//#include<iostream>
+//#include<unordered_map>
+//#include<unordered_set>
+//#include<queue>
+//#include<vector>
+//
+//using namespace std;
+//
+//unordered_map<int, vector<int>>adjList;
+//vector<int>result;
+//void bfs(int start) {
+//	unordered_set<int> visited;
+//	queue<int> q;
+//
+//	q.push(start);
+//	visited.insert(start);
+//	result.push_back(start);
+//	while (!q.empty()) {
+//		int node = q.front();
+//		q.pop();
+//
+//		for (int neighbor : adjList[node]) {
+//			if (visited.find(neighbor) == visited.end()) {
+//				q.push(neighbor);
+//				visited.insert(neighbor);
+//				result.push_back(neighbor);
+//			}
+//		}
+//	}
+//}
+//vector<int> solution(vector<pair<int, int>>graph, int start) {
+//	for (auto& edge : graph) {
+//		int u = edge.first;
+//		int v = edge.second;
+//		adjList[u].push_back(v);
+//	}
+//	bfs(start);
+//
+//	return result;
+//}
+//void init() {
+//	adjList.clear();
+//	result.clear();
+//}
+//void print(vector<int> vec) {
+//	copy(vec.begin(), vec.end(), ostream_iterator<int>(cout, " "));
+//	cout << endl;
+//}
+//int main() {
+//	print(solution({ {1, 2}, {1, 3}, {2, 4}, {2, 5}, {3, 6}, {3, 7}, {4, 8}, {5, 8}, {6, 9}, {7, 9} }, 1)); //출력값 : 1 2 3 4 5 6 7 8 9
+//	init();
+//	print(solution({ {0, 1}, {1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 0} }, 1)); //출력값 : 1 2 3 4 5 0
+//	return 0;
+//}
+
+//// 참고내용(다익스트라 알고리즘-리스트 기반)
+//#include<iostream>
+//#include<vector>
+//
+//#define INF 1e9//무한을 의미하는 값으로 10억 설정
+//using namespace std;
+//
+//int n, m, start;
+//
+//vector<pair<int, int>> graph[100001];//각 노드에 연결되어 있는 노드에 대한 정보를 담는 배열
+//bool visited[100001];
+//int d[100001];//최단거리 테이블
+//int getSmallestNode() {
+//	int min_value = INF;
+//	int index = 0;
+//
+//	for (int i = 1; i <= n; i++) {
+//		if (d[i] < min_value && visited[i]) {
+//			min_value = d[i];
+//			index = i;
+//		}
+//	}
+//	return index;
+//}
+////다익스트라 수행 함수
+//void dijkstra(int start) {
+//	d[start] = 0;
+//	visited[start] = true;
+//	for (int j = 0; j < graph[start].size(); j++) {
+//		int adjindex = graph[start][j].first;
+//		d[adjindex] = graph[start][j].second;//최단거리 테이블에 초기값 세팅
+//	}
+//	for (int i = 0; i < n - 1; i) {
+//		int now = getSmallestNode();
+//		visited[now] = true;
+//		for (int j = 0; j < graph[now].size(); j++) {
+//			int cost = d[now] + graph[now][j].second;
+//			if (cost < d[graph[now][j].first])
+//				d[graph[now][j].first] = cost;
+//		}
+//	}
+//}
+//int main()
+//{
+//    cin >> n >> m >> start;
+//    // 모든 간선 정보를 입력받기
+//    for (int i = 0; i < m; i++)
+//    {
+//        int a, b, c;
+//        cin >> a >> b >> c;  // a번 노드에서 b번 노드로 가는 비용이 c라는 의미
+//        graph[a].push_back({ b, c });
+//    }
+//
+//    // 최단 거리 테이블을 모두 무한으로 초기화
+//    fill_n(d, 100001, INF);
+//
+//    dijkstra(start);
+//
+//    // 모든 노드로 가기 위한 최단 거리를 출력
+//    for (int i = 1; i <= n; i++)
+//    {
+//        // 도달할 수 없는 경우, 무한(INFINITY)이라고 출력
+//        if (d[i] == INF)
+//        {
+//            cout << "INFINITY" << '\n';
+//        }
+//        // 도달할 수 있는 경우 거리를 출력
+//        else
+//        {
+//            cout << d[i] << '\n';
+//        }
+//    }
+//    return 0;
+//}
+//
+//// 참고내용(다익스트라 알고리즘-우선순위큐 기반)
+//#include <stdio.h>
+//#include<iostream>
+//#include<vector>
+//#include<queue>
+//using namespace std;
+//#define INF 1e9 // 무한을 의미하는 값으로 10억을 설정
+//
+//// 노드의 개수(N), 간선의 개수(M), 시작 노드 번호(Start)
+//// 노드의 개수는 최대 100,000개라고 가정
+//int n, m, start;
+//
+//vector<pair<int, int> > graph[100001]; // 각 노드에 연결되어 있는 노드에 대한 정보를 담는 배열
+//int d[100001]; // 최단 거리 테이블 만들기
+//
+//void dijkstra(int start)
+//{
+//    priority_queue<pair<int, int>>pq; // 거리, 노드 인덱스
+//
+//    pq.push({ 0,start }); //시작 노드로 가기위한 최단 경로는 0으로 설정하여, 큐에 삽입.
+//    d[start] = 0;
+//
+//    while (!pq.empty())
+//    {
+//        int dist = -pq.top().first; //현재 노드까지의 비용
+//        int now = pq.top().second; // 현재 노드
+//        pq.pop();
+//
+//        if (d[now] < dist) // 이미 최단경로를 체크한 노드인 경우 패스
+//            continue;
+//
+//        for (int i = 0; i < graph[now].size(); i++)
+//        {
+//            int cost = dist + graph[now][i].second; // 거쳐서 가는 노드의 비용을 계산
+//            // 현재노드까지 비용 + 다음 노드 비용
+//            if (cost < d[graph[now][i].first]) // 비용이 더 작다면 최단경로 테이블 값을 갱신.
+//            {
+//                d[graph[now][i].first] = cost;
+//                pq.push(make_pair(-cost, graph[now][i].first));
+//            }
+//        }
+//    }
+//}
+//
+//int main(void)
+//{
+//    cin >> n >> m >> start;
+//
+//    // 모든 간선 정보를 입력받기
+//    for (int i = 0; i < m; i++)
+//    {
+//        int a, b, c;
+//        cin >> a >> b >> c;
+//        // a번 노드에서 b번 노드로 가는 비용이 c라는 의미
+//        graph[a].push_back({ b, c });
+//    }
+//
+//    // 최단 거리 테이블을 모두 무한으로 초기화
+//    fill(d, d + 100001, INF);
+//
+//    // 다익스트라 알고리즘을 수행
+//    dijkstra(start);
+//
+//    // 모든 노드로 가기 위한 최단 거리를 출력
+//    for (int i = 1; i <= n; i++)
+//    {
+//        // 도달할 수 없는 경우, 무한(INFINITY)이라고 출력
+//        if (d[i] == INF) {
+//            cout << "INFINITY" << '\n';
+//        }
+//        // 도달할 수 있는 경우 거리를 출력
+//        else {
+//            cout << d[i] << '\n';
+//        }
+//    }
+//}
