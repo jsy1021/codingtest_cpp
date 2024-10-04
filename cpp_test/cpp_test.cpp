@@ -1676,3 +1676,302 @@
 //        }
 //    }
 //}
+
+////481p. 문제39 벨만-포드 알고리즘
+//#include <iostream>
+//#include <vector>
+//#include <limits>
+//
+//using namespace std;
+//
+//const int INF = numeric_limits<int>::max();
+//// 간선을 나타내는 구조체
+//struct Edge {
+//    int src, dest, weight;
+//};
+//
+//// 그래프를 나타내는 클래스
+//class Graph {
+//public:
+//    int V, E;
+//    vector<Edge> edges;
+//
+//    Graph(int V, int E) {
+//        this->V = V;
+//        this->E = E;
+//        edges.reserve(E);
+//    }
+//
+//    // 간선 추가 메서드
+//    void addEdge(int u, int v, int w) {
+//        edges.push_back({ u, v, w });
+//    }
+//
+//    // 벨만-포드 알고리즘 구현
+//    void BellmanFord(int src) {
+//        // 정점의 거리를 무한대로 초기화
+//        vector<int> dist(V, INF);
+//        dist[src] = 0;
+//
+//        // 모든 간선에 대해 |V| - 1번 반복
+//        for (int i = 1; i <= V - 1; i++) {
+//            for (const auto& edge : edges) {
+//                int u = edge.src;
+//                int v = edge.dest;
+//                int weight = edge.weight;
+//
+//                // 현재 간선이 더 짧은 경로를 제공하는 경우 거리 갱신
+//                if (dist[u] != INF && dist[u] + weight < dist[v]) {
+//                    dist[v] = dist[u] + weight;
+//                }
+//            }
+//        }
+//
+//        // 음수 사이클 체크: |V|-1번 반복 후에도 거리가 갱신되면 음수 사이클 존재
+//        for (const auto& edge : edges) {
+//            int u = edge.src;
+//            int v = edge.dest;
+//            int weight = edge.weight;
+//
+//            if (dist[u] != INF && dist[u] + weight < dist[v]) {
+//                cout << "음수 사이클이 존재합니다.\n";
+//                return;
+//            }
+//        }
+//
+//        // 최종 거리 출력
+//        cout << "정점 " << src << "로부터의 최단 거리:\n";
+//        for (int i = 0; i < V; ++i) {
+//            if (dist[i] ==INF)
+//                cout << "정점 " << i << "로의 경로가 존재하지 않습니다.\n";
+//            else
+//                cout << "정점 " << i << "로의 거리: " << dist[i] << "\n";
+//        }
+//    }
+//};
+//
+//int main() {
+//    // 정점 수와 간선 수
+//    int V = 5;
+//    int E = 8;
+//
+//    Graph g(V, E);
+//
+//    // 간선 추가 (u, v, w): u -> v (가중치 w)
+//    g.addEdge(0, 1, -1);
+//    g.addEdge(0, 2, 4);
+//    g.addEdge(1, 2, 3);
+//    g.addEdge(1, 3, 2);
+//    g.addEdge(1, 4, 2);
+//    g.addEdge(3, 2, 5);
+//    g.addEdge(3, 1, 1);
+//    g.addEdge(4, 3, -3);
+//
+//    // 벨만-포드 실행, 시작 정점은 0
+//    g.BellmanFord(0);
+//
+//    return 0;
+//}
+
+////485p. 문제40 미로 탈출
+//#include<iostream>
+//#include<queue>
+//#include<string>
+//#include<vector>
+//
+//using namespace std;
+//
+//struct Point {
+//	int y, x, cnt;
+//};
+//int dy[4] = { -1,0,1,0 };
+//int dx[4] = { 0,-1,0,1 };
+//int n, m;
+//
+//bool isWithinRange(int y, int x) { return 0 <= y && y < n && 0 <= x && x < m; }
+//
+//Point findStartPoint(char start, vector<string>& maps) {
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < m; j++) {
+//			if (maps[i][j] == start) {
+//				return { i,j,0 };
+//			}
+//		}
+//	}
+//	return { -1,-1,0 };//모든 좌표탐색 후 시작점을 찾지 못한 경우
+//}
+//int bfs(char start, char end, vector<string>& maps) {
+//	bool visited[101][101] = { false };
+//	queue<Point> q;//구조체를 넣음 y좌표, x좌표, count 순서
+//	q.push(findStartPoint(start, maps));//시작 노드부터 너비 우선 탐색
+//	
+//	while (!q.empty()) {
+//		Point current = q.front();
+//		q.pop();
+//
+//		if (maps[current.y][current.x] == end) {
+//			return current.cnt;
+//		}
+//		for (int i = 0; i < 4; i++) {
+//			int ny = current.y + dy[i];
+//			int nx = current.x + dx[i];
+//
+//			if (isWithinRange(ny, nx) && !visited[ny][nx] && maps[ny][nx] != 'X') {
+//				q.push({ ny, nx,current.cnt + 1 });
+//				visited[ny][nx] = true;
+//			}
+//		}
+//	}
+//	return -1;
+//}
+//int solution(vector<string>maps) {
+//	n = maps.size();
+//	m = maps[0].size();
+//	
+//	int distanceToL = bfs('S', 'L', maps);
+//	if (distanceToL == -1) {
+//		return -1;
+//	}
+//	int distanceToE = bfs('L', 'E', maps);
+//	return distanceToE == -1 ? -1 : distanceToL + distanceToE;
+//}
+//int main() {
+//	cout << solution({ "SOOOL", "XXXXO", "OOOOO", "OXXXX", "OOOOE" }) << endl; //출력값 : 16
+//	return 0;
+//}
+
+////492p. 문제41 게임 맵 최단거리
+//#include<iostream>
+//#include<vector>
+//#include<queue>
+//
+//using namespace std;
+//
+//const int MAX_SIZE = 100;
+//const int dy[4] = {-1,0,1,0};
+//const int dx[4] = {0,-1,0,1};
+//int check[MAX_SIZE][MAX_SIZE];
+//int n, m;
+//
+//struct Point {
+//	int y, x, cnt;
+//};
+//queue<Point>q;
+//int solution(vector<vector<int>>maps) {
+//	n = maps.size();
+//	m = maps[0].size();
+//	q.push({ 0,0,1 });
+//	check[0][0] = 1;
+//	while (!q.empty()) {
+//		Point current = q.front();
+//		q.pop();
+//
+//		if (current.y == n - 1 && current.x == m - 1)
+//			return current.cnt;
+//
+//		for (int i = 0; i < 4; i++) {
+//			int ny = current.y + dy[i];
+//			int nx = current.x + dx[i];
+//			if ((0 <= ny && ny < n && 0 <= nx && nx < m)&&check[ny][nx]==0&&maps[ny][nx]==1) {
+//				q.push({ ny,nx,current.cnt + 1 });
+//				check[ny][nx] = 1;//방문 체크
+//			}
+//		}
+//	}
+//	int destinationX = m - 1; 
+//	int destinationY = n - 1;
+//	if (check[destinationY][destinationX] == 0) {
+//		return -1;
+//	}
+//}
+//int main() {
+//	cout << solution({ {1, 0, 1, 1, 1}, {1, 0, 1, 0, 1}, {1, 0, 1, 1, 1}, {1, 1, 1, 0, 1}, {0, 0, 0, 0, 1} }) << endl; //출력값 : 11
+//	return 0;
+//}
+
+////498p. 문제42 네트워크
+//#include<iostream>
+//#include<string>
+//#include<vector>
+//
+//using namespace std;
+//
+//vector<bool>visited;
+//
+//void dfs(const vector<vector<int>>& network, int node) {
+//	visited[node] = true;
+//
+//	for (int i = 0; i < network[node].size(); i++) {
+//		if (network[node][i] && !visited[i])
+//			dfs(network, i);
+//	}
+//}
+//int solution(int n, vector<vector<int>>computers) {
+//	visited = vector<bool>(computers.size(), false);
+//	int networkCount = 0;
+//
+//	for (int i = 0; i < computers.size(); i++) {
+//		if (!visited[i]) {
+//			dfs(computers, i);
+//			networkCount++;
+//		}
+//	}
+//	return networkCount;
+//}
+//int main() {
+//	cout << solution(3, { {1, 1, 0}, {1, 1, 0}, {0, 0, 1} }) << endl; //출력값 : 2
+//	return 0;
+//}
+
+////union-find 알고리즘 적용
+//#include<iostream>
+//#include<unordered_map>
+//#include<vector>
+//
+//using namespace std;
+//
+//int parent[201];
+//
+//int findParent(int node) {
+//	if (node == parent[node])//탐색 노드와 루트 노드가 같다 해당 노드를 리턴
+//		return node;
+//	return parent[node] = findParent(parent[node]);
+//}
+//void unionNodes(int node1, int node2) {
+//	int root1 = findParent(node1);
+//	int root2 = findParent(node2);
+//	if (root1 != root2) {
+//		parent[root2] = root1;
+//	}
+//}
+//int solution(int n, vector<vector<int>>computers) {
+//	int ans = 0;
+//	for (int i = 0; i < n; i++) {
+//		parent[i] = i;
+//	}
+//	for (int i = 0; i < n; i++) {
+//		for (int j = 0; j < n; j++) {
+//			if (computers[i][j])
+//				unionNodes(i, j);
+//		}
+//	}
+//	unordered_map<int, bool> networkFound;
+//	for (int i = 0; i < n; i++) {
+//		int root = findParent(i);
+//		if (!networkFound[root]) {//networkFound에 값이 존재하지 않을때 기본값 false임
+//			ans++;
+//			networkFound[root] = true;
+//		}
+//	}
+//	return ans;
+//}
+//int main() {
+//	cout << solution(3, { {1, 1, 0}, {1, 1, 0}, {0, 0, 1} }) << endl; //출력값 : 2
+//	return 0;
+//}
+
+//504p. 문제43 양과 늑대
+#include<iostream>
+#include<vector>
+
+using namespace std;
