@@ -1970,8 +1970,83 @@
 //	return 0;
 //}
 
-//504p. 문제43 양과 늑대
+////511p. 문제44 배달
+//#include <vector>
+//#include <queue>
+//#include <limits>
+//#include <utility> // For std::pair
+//#include <iostream>
+//
+//using namespace std;
+//
+//int const INF = numeric_limits<int>::max();
+//
+//int solution(int N, vector<vector<int>> road, int K) {
+//    vector<vector<pair<int, int>>> graph(N + 1); // 1. 2차원 벡터로 그래프 선언
+//    vector<int> distances(N + 1, INF); // 2. 거리를 무한대로 초기화
+//    vector<bool> visited(N + 1, false);
+//    distances[1] = 0;
+//
+//    // 3. 방향이 따로 없으므로, 양방향 모두 동일한 가중치 입력
+//    for (const auto& r : road) {
+//        int a = r[0], b = r[1], cost = r[2];
+//        graph[a].push_back({ b, cost });
+//        graph[b].push_back({ a, cost });
+//    }
+//
+//    // 4. 출발점을 heap에 추가
+//    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> heap;
+//    heap.push({ 0, 1 });
+//
+//    while (!heap.empty()) {
+//        int dist = heap.top().first;
+//        int node = heap.top().second;
+//        heap.pop();
+//
+//        // 5. 이미 방문한 노드는 무시
+//        if (visited[node]) continue;
+//        visited[node] = true;
+//
+//        for (const auto& next : graph[node]) {
+//            int next_node = next.first;
+//            int next_dist = next.second;
+//            int cost = dist + next_dist;
+//
+//            // 6. 거쳐가는 노드로 가는 경로의 비용이 더 짧은 경우
+//            if (cost < distances[next_node]) {
+//                distances[next_node] = cost;
+//                heap.push({ cost, next_node });
+//            }
+//        }
+//    }
+//
+//    int count = 0;
+//
+//    // 7. 거리가 K 이하인 장소를 카운트
+//    for (int i = 1; i <= N; i++) {
+//        if (distances[i] <= K) count++;
+//    }
+//
+//    return count;
+//}
+//
+//int main() {
+//    cout << solution(5, { {1, 2, 1}, {2, 3, 3}, {5, 2, 2}, {1, 4, 2}, {5, 3, 1}, {5, 4, 2} }, 3) << endl; // 출력값: 4
+//    cout << solution(6, { {1, 2, 1}, {1, 3, 2}, {2, 3, 2}, {3, 4, 3}, {3, 5, 2}, {3, 5, 3}, {5, 6, 1} }, 4) << endl; // 출력값: 4
+//    return 0;
+//}
+
+//522p. 문제46 전력망을 둘로 나누기
 #include<iostream>
 #include<vector>
+#include<algorithm>
+#include<cmath>
 
 using namespace std;
+
+int solution(int n, vector<vector<int>>wires) {
+	
+}
+int main() {
+	return 0;
+}
