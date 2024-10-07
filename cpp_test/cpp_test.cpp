@@ -2036,16 +2036,76 @@
 //    return 0;
 //}
 
-//522p. 문제46 전력망을 둘로 나누기
+////522p. 문제46 전력망을 둘로 나누기
+//#include<iostream>
+//#include<vector>
+//#include<algorithm>
+//#include<cmath>
+//
+//using namespace std;
+//
+//const int int_max = numeric_limits<int>::max();
+//int dfs(int node, int parent, const vector<vector<int>>& graph) {
+//	int cnt = 1;
+//	// 인접노드에 대해 깊이우선탐색 계속 진행
+//	for (int child : graph[node]) {
+//		// 무한탐색을 방지하기 위해 인접한 노드 중, 부모노드는 탐색하지 않음
+//		if (child != parent) {
+//			cnt += dfs(child, node, graph);
+//		}
+//	}
+//	return cnt;
+//}
+//int solution(int n, vector<vector<int>>wires) {
+//	vector<vector<int>>graph(n + 1);
+//	for (auto& wire : wires) {
+//		int a = wire[0];
+//		int b = wire[1];
+//		
+//		graph[a].push_back(b);
+//		graph[b].push_back(a);//방향이 정해지지 않은 경우 양방향으로 설정해야함
+//	}
+//	int min_diff = int_max;
+//	
+//	for (auto& wire : wires) {
+//		int a = wire[0];
+//		int b = wire[1];
+//
+//		graph[a].erase(remove(graph[a].begin(), graph[a].end(), b), graph[a].end());
+//		graph[b].erase(remove(graph[b].begin(), graph[b].end(), a), graph[b].end());
+//
+//		int cnt_a = dfs(a, b, graph);
+//		int cnt_b = n - cnt_a;
+//		min_diff = min(min_diff, abs(cnt_a - cnt_b));
+//		
+//		graph[a].push_back(b);
+//		graph[b].push_back(a);
+//		
+//	}
+//	return min_diff;
+//}
+//int main() {
+//	cout << solution(9, { {1, 3}, {2, 3}, {3, 4}, {4, 5}, {4, 6}, {4, 7}, {7, 8}, {7, 9} }) << endl; //출력값 : 3
+//	return 0;
+//}
+
+//프로그래머스 문제: 의상
 #include<iostream>
+#include<unordered_map>
+#include<string>
 #include<vector>
-#include<algorithm>
-#include<cmath>
 
 using namespace std;
 
-int solution(int n, vector<vector<int>>wires) {
-	
+int solution(vector<vector<string>>clothes) {
+	int answer = 1;
+	unordered_map<string, int> result;
+	for (auto p : clothes)
+		result[p[1]]++;
+	for (auto param : result) {
+		answer *= (param.second + 1);
+	}
+	return answer-1;
 }
 int main() {
 	return 0;
