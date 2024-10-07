@@ -2089,24 +2089,60 @@
 //	return 0;
 //}
 
-//프로그래머스 문제: 의상
+////프로그래머스 문제: 의상
+//#include<iostream>
+//#include<unordered_map>
+//#include<string>
+//#include<vector>
+//
+//using namespace std;
+//
+//int solution(vector<vector<string>>clothes) {
+//	int answer = 1;
+//	unordered_map<string, int> result;
+//	for (auto p : clothes)
+//		result[p[1]]++;
+//	for (auto param : result) {
+//		answer *= (param.second + 1);
+//	}
+//	return answer-1;
+//}
+//
+//int main() {
+//	return 0;
+//}
+//프로그래머스 문제: [3차]압축
 #include<iostream>
-#include<unordered_map>
-#include<string>
 #include<vector>
+#include<string>
+#include<unordered_map>
 
 using namespace std;
 
-int solution(vector<vector<string>>clothes) {
-	int answer = 1;
-	unordered_map<string, int> result;
-	for (auto p : clothes)
-		result[p[1]]++;
-	for (auto param : result) {
-		answer *= (param.second + 1);
+vector<int>solution(string msg) {
+	vector<int>answer;
+	unordered_map<string, int> alpabet;
+	int num = 1;
+	for (char C = 'A'; C <= 'Z';C++) {
+		string str = ""; str += C;
+		alpabet[str] = num++;
 	}
-	return answer-1;
+	
+	string current = "";
+	for (int i = 0; i < msg.length(); i++) {
+		current += msg[i];
+		if (alpabet[current] == 0) {
+			alpabet[current] = num++;
+			current = current.substr(0, current.length() - 1);
+			answer.push_back(alpabet[current]);
+			current = "";
+			i--;
+		}
+	}
+	answer.push_back(alpabet[current]);
+	return answer;
 }
+
 int main() {
 	return 0;
 }
