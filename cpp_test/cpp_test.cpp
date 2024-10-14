@@ -2111,38 +2111,353 @@
 //int main() {
 //	return 0;
 //}
-//프로그래머스 문제: [3차]압축
-#include<iostream>
-#include<vector>
-#include<string>
-#include<unordered_map>
+////프로그래머스 문제: [3차]압축
+//#include<iostream>
+//#include<vector>
+//#include<string>
+//#include<unordered_map>
+//
+//using namespace std;
+//
+//vector<int>solution(string msg) {
+//	vector<int>answer;
+//	unordered_map<string, int> alpabet;
+//	int num = 1;
+//	for (char C = 'A'; C <= 'Z';C++) {
+//		string str = ""; str += C;
+//		alpabet[str] = num++;
+//	}
+//	
+//	string current = "";
+//	for (int i = 0; i < msg.length(); i++) {
+//		current += msg[i];
+//		if (alpabet[current] == 0) {
+//			alpabet[current] = num++;
+//			current = current.substr(0, current.length() - 1);
+//			answer.push_back(alpabet[current]);
+//			current = "";
+//			i--;
+//		}
+//	}
+//	answer.push_back(alpabet[current]);
+//	return answer;
+//}
+//
+//int main() {
+//	return 0;
+//}
 
-using namespace std;
+////366p. 문제28 트리 순회(복습)
+//#include<iostream>
+//#include<vector>
+//#include<string>
+//#include<iterator>
+//
+//
+//using namespace std;
+//string preorder(vector<int> nodes, int idx) {
+//	if (idx < nodes.size()) {
+//		string ret = to_string(nodes[idx])+" ";
+//		ret += preorder(nodes, idx * 2);
+//		ret += preorder(nodes, idx * 2 + 1);
+//		return ret;
+//	}
+//	return "";
+//}
+//string inorder(vector<int> nodes, int idx) {
+//	if (idx < nodes.size()) {
+//		string ret = inorder(nodes, idx * 2);
+//		ret += to_string(nodes[idx])+" ";
+//		ret += inorder(nodes, idx * 2 + 1);
+//		return ret;
+//	}
+//	return "";
+//}
+//string postorder(vector<int> nodes, int idx) {
+//	if (idx < nodes.size()) {
+//		string ret = postorder(nodes, idx * 2);
+//		ret += postorder(nodes, idx * 2 + 1);
+//		ret += to_string(nodes[idx]) + " ";
+//		return ret;
+//	}
+//	return "";
+//}
+//vector<string> solution(vector<int>nodes) {
+//	vector<string>result;
+//	string pre = preorder(nodes, 1);
+//	string in = inorder(nodes, 1);
+//	string post = postorder(nodes, 1);
+//	
+//	pre.pop_back();//마지막 공백 제거
+//	in.pop_back();
+//	post.pop_back();
+//
+//	result.push_back(pre);
+//	result.push_back(in);
+//	result.push_back(post);
+//
+//	return result;
+//	
+//}
+//void print(vector<string>str) {
+//	copy(str.begin(), str.end(), ostream_iterator<string>(cout, "\n"));
+//	cout << endl;
+//}
+//int main() {
+//	print(solution({0, 1, 2, 3, 4, 5, 6, 7 })); //0번 인덱스에 더미값을 넣고 1번부터 순회
+//	return 0;
+//}
 
-vector<int>solution(string msg) {
-	vector<int>answer;
-	unordered_map<string, int> alpabet;
-	int num = 1;
-	for (char C = 'A'; C <= 'Z';C++) {
-		string str = ""; str += C;
-		alpabet[str] = num++;
-	}
-	
-	string current = "";
-	for (int i = 0; i < msg.length(); i++) {
-		current += msg[i];
-		if (alpabet[current] == 0) {
-			alpabet[current] = num++;
-			current = current.substr(0, current.length() - 1);
-			answer.push_back(alpabet[current]);
-			current = "";
-			i--;
-		}
-	}
-	answer.push_back(alpabet[current]);
-	return answer;
-}
+////369p. 문제 29 이진 탐색 트리 구현(복습)
+//#include<iostream>
+//#include<vector>
+//#include<iterator>
+//
+//using namespace std;
+//
+//class Node {
+//public:
+//	int val;
+//	Node* left, * right;
+//
+//	Node(int key) :val(key), left(nullptr), right(nullptr) {}
+//};
+//class BST {
+//private:
+//	Node* root;
+//
+//	Node* insertNode(Node* node, int key) {
+//		if (!node) {
+//			return new Node(key);
+//		}
+//		if (key < node->val) {//키의 값이 노드의 값보다 작을때는 해당 노드의 왼쪽에 삽입
+//			node->left = insertNode(node->left, key);
+//		}
+//		else {
+//			node->right = insertNode(node->right, key);
+//		}
+//		return node;
+//	}
+//	bool searchNode(Node* node, int key) {
+//		if (!node) {
+//			return false;
+//		}
+//		if (key == node->val) {
+//			return true;
+//		}
+//		return key < node->val ? searchNode(node->left, key) :
+//			searchNode(node->right, key);
+//	}
+//public:
+//	BST() : root(nullptr) {}
+//
+//	void insert(int key) {
+//		root = insertNode(root, key);
+//	}
+//	bool search(int key) {
+//		return searchNode(root, key);
+//	}
+//};
+//vector<bool>solution(vector<int> lst, vector<int> search_lst) {
+//	BST bst;
+//	for (int key : lst) {
+//		bst.insert(key);
+//	}
+//	vector<bool>result;
+//	for (int search_val : search_lst) {
+//		result.push_back(bst.search(search_val));
+//	}
+//	return result;
+//}
+//void print(vector<bool>vec) {
+//	copy(vec.begin(), vec.end(), ostream_iterator<bool>(cout, " "));
+//	cout << endl;
+//}
+//int main() {
+//	print(solution({ 5, 3, 8, 4, 2, 1, 7, 10 }, { 1, 2, 5, 6 })); //출력값 : 1 1 1 0
+//	return 0;
+//}
 
-int main() {
-	return 0;
-}
+////375p. 문제30 예상 대진표
+//#include<iostream>
+//#include<vector>
+//
+//using namespace std;
+//
+//int solution(int n, int a, int b) {
+//	int ans = 0;
+//	while (a != b) {
+//		a = (a + 1) / 2;
+//		b = (b + 1) / 2;
+//		ans++;
+//	}
+//	return ans;
+//}
+//int main() {
+//	cout << solution(8, 4, 7) << endl; //출력값 : 3
+//	return 0;
+//}
+
+////379p. 문제31 다단계 칫솔 판매(복습)
+//#include<iostream>
+//#include<vector>
+//#include<string>
+//#include<iterator>
+//#include<unordered_map>
+//
+//using namespace std;
+//
+//vector<int>solution(vector<string>enroll, vector<string>referral,
+//	vector<string>seller, vector<int>amount) {
+//	unordered_map<string, string>parent;
+//	
+//	for (int i = 0; i < enroll.size(); i++) {
+//		parent[enroll[i]] = referral[i];
+//	}
+//	unordered_map<string, int>total; //referral을 키로 사용
+//
+//	for (const auto& name : enroll) {
+//		total[name] = 0;
+//	}
+//	for (int i = 0; i < seller.size(); i++) {
+//		int money = amount[i] * 100;//현재 판매원의 수익금
+//		string cur_name = seller[i];
+//
+//		while (money > 0 && cur_name != "-") {
+//			int distribute_money = money / 10;
+//			total[cur_name] += money - distribute_money;
+//
+//			if (parent.find(cur_name) != parent.end()) {
+//				cur_name = parent[cur_name];
+//			}
+//			else {
+//				break;
+//			}
+//			money = distribute_money;
+//		}
+//	}
+//	vector<int> result;
+//	for (const auto& name : enroll) {
+//		result.push_back(total[name]);
+//	}
+//	return result;
+//}
+//void print(vector<int> vec) {
+//	copy(vec.begin(), vec.end(), ostream_iterator<int>(cout, " "));
+//	cout << endl;
+//}
+//int main() {
+//	print(solution({ "john", "mary", "edward", "sam", "emily", "jaimie", "tod", "young" },
+//		{ "-", "-", "mary", "edward", "mary", "mary", "jaimie", "edward" },
+//		{ "young", "john", "tod", "emily", "mary" },
+//		{ 12, 4, 2, 5, 10 }
+//	)); //출력값 : 360 958 108 0 450 18 180 1080
+//
+//	return 0;
+//}
+
+////387p. 문제32 길찾기 게임(복습)
+//#include<iostream>
+//#include<algorithm>
+//#include<vector>
+//
+//using namespace std;
+//
+//struct Node {
+//	int id, x, y;
+//	Node* left = nullptr;
+//	Node* right = nullptr;
+//
+//	Node(int id, int x, int y) : id(id), x(x), y(y) {}
+//};
+//class BT {
+//private:
+//	Node* root = nullptr;
+//
+//	static bool compareNodes(Node* a, Node* b) {
+//		if (a->y != b->y) {
+//			return a->y > b->y;
+//		}
+//		return a->x < b->x;
+//	}
+//
+//	Node* addNode(Node* current, Node* newNode) {
+//		if (current == nullptr) {
+//			return  newNode;
+//		}
+//		if (newNode->x < current->x) {
+//			current->left = addNode(current->left, newNode);
+//		}
+//		else {
+//			current->right = addNode(current->right, newNode);
+//		}
+//		return current;
+//	}
+//	void preOrder(Node* node, vector<int>& traversal) {
+//		if (node == nullptr) {
+//			return;
+//		}
+//		traversal.push_back(node->id);
+//		preOrder(node->left, traversal);
+//		preOrder(node->right, traversal);
+//	}
+//	void postOrder(Node* node, vector<int>& traversal) {
+//		if (node == nullptr) {
+//			return;
+//		}
+//		postOrder(node->left, traversal);
+//		postOrder(node->right, traversal);
+//		traversal.push_back(node->id);
+//	}
+//public:
+//	BT() : root(nullptr) {}
+//
+//	void buildTree(const vector<vector<int>>& nodeInfo) {
+//		vector<Node*>nodes;
+//		for (int i = 0; i < nodeInfo.size(); i++) {
+//			nodes.push_back(new Node(i + 1, nodeInfo[i][0], nodeInfo[i][1]));
+//		}
+//		
+//		sort(nodes.begin(), nodes.end(), compareNodes);
+//
+//		for (Node* node : nodes) {
+//			root = addNode(root, node);
+//		}
+//	}
+//	// 전위순회 후 경로를 반환하는 함수  
+//	vector<int> getPreOrderTraversal() {
+//		vector<int> traversal;
+//		preOrder(root, traversal);
+//
+//		return traversal;
+//	}
+//
+//	
+//	vector<int> getPostOrderTraversal() {
+//		vector<int> traversal;
+//		postOrder(root, traversal);
+//
+//		return traversal;
+//	}
+//};
+//vector<vector<int>> solution(vector<vector<int>> nodeinfo) {
+//	BT tree;
+//
+//	tree.buildTree(nodeinfo);
+//	vector<int> preOrder = tree.getPreOrderTraversal();
+//	vector<int> postOrder = tree.getPostOrderTraversal();
+//
+//	return { preOrder, postOrder };
+//}
+//void print(vector<vector<int>> vec)
+//{
+//	for (auto& vec_elem : vec)
+//	{
+//		copy(vec_elem.begin(), vec_elem.end(), std::ostream_iterator<int>(cout, " "));
+//		cout << endl;
+//	}
+//}
+//int main() {
+//	print(solution({ {5, 3}, {11, 5}, {13, 3}, {3, 5}, {6, 1}, {1, 3}, {8, 6}, {7, 2}, {2, 2} }));
+//	return 0;
+//}
